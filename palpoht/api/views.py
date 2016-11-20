@@ -1,36 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-import json
 from . import steamapi, youtubeapi
 
-def gameinfo(request, name):
+def gamesearch(request, name):
 
-	#steaminfo = getGameInfo(name)
-	gameid = 123
-	gamename = 'name'
-	gamedescription = 'desc'
-	gameprice = 9001
-	gameimage = 'imagelink'
-	gamedevelopers = 'devs'
-	gamepublishers = 'pubs'
-	gamegenres = 'genres'
-	gamecategories = 'cats'
-	#gamevideos = getVideos(name)
-	gamevideos = 'vids'
+	appid_list = steamapi.findGames(name)
 
-	content = {
-		'gameid': gameid,
-		'gamename': gamename,
-		'gamedescription': gamedescription,
-		'gameprice': gameprice,
-		'gameimage': gameimage,
-		'gamedevelopers': gamedevelopers,
-		'gamepublishers': gamepublishers,
-		'gamegenres': gamegenres,
-		'gamecategories': gamecategories,
-		'gamevideos': gamevideos
-	}
+	return HttpResponse(appid_list, content_type='application/json')
 
-	jsoncontent = json.dumps(content)
+def gameinfo(request, appid):
 
-	return HttpResponse(jsoncontent)
+	parsed_data = steamapi.getGameInfo(appid)
+	return HttpResponse(parsed_data, content_type='application/json')

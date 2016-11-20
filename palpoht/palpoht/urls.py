@@ -19,5 +19,6 @@ from api import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/(?P<name>.+)/$', views.gameinfo, name='gameinfoview' ),
+    url(r'^api/search/(?P<name>.+)/$', views.gamesearch, name='gamesearch' ),
+    url(r'^api/game/(?P<appid>[0-9]+)/$', views.gameinfo, name='gameinfo' ),
 ]

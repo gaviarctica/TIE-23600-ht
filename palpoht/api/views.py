@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from . import steamapi, youtubeapi
+import json
 
 def gamesearch(request, name):
 
@@ -10,5 +11,16 @@ def gamesearch(request, name):
 
 def gameinfo(request, appid):
 
-	parsed_data = steamapi.getGameInfo(appid)
-	return HttpResponse(parsed_data, content_type='application/json')
+	steamData = steamapi.getGameInfo(appid)
+
+	if steamData['success'] == False:
+		jsonContent = json.dumps(steamData)
+		return HttpResponse(jsonContent, content_type='application/json')
+
+	youtubeData = youtubeapi.getVideos(steamData['gameName'])
+
+	# Combine the dicts
+	combinedData = { **steamData, **youtubeData }
+	
+	jsonContent = json.dumps(combinedData)
+	return HttpResponse(jsonContent, content_type='application/json')

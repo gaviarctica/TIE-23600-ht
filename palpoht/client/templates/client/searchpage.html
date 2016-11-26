@@ -1,0 +1,316 @@
+{% extends "client/header.html" %}
+
+{% block body %}
+
+<div class="card" id="notification">
+	<div class="card-header">
+		Notification
+	</div>
+	<div class="card-content">
+	</div>
+</div>
+
+<div id="game-info">
+	<div class="card">
+		<div class="card-header" id="game-header">
+			<div id="game-header-img">
+				<img src="">
+			</div>
+			<div id="game-header-text">
+			</div>
+		</div>
+	</div>
+	<div class="flex-content">
+		<div class="card half-wide">
+			<div class="card-header">
+				Description
+			</div>
+			<div class="card-content" id="game-description">
+			</div>
+		</div>
+		<div class="card half-wide">
+			<div class="card-header">
+				Details
+			</div>
+			<div class="card-content">
+				<table>
+					<tr>
+						<th>
+							Steam Appid
+						</th>
+						<td id="game-appid">
+						</td>
+					</tr>
+					<tr>
+						<th>
+							Game Developers
+						</th>
+						<td id="game-developers">
+						</td>
+					</tr>
+					<tr>
+						<th>
+							Game Publishers
+						</th>
+						<td id="game-publishers">
+						</td>
+					</tr>
+					<tr>
+						<th>
+							Genres
+						</th>
+						<td id="game-genres">
+						</td>
+					</tr>
+					<tr>
+						<th>
+							Categories
+						</th>
+						<td id="game-categories">
+						</td>
+					</tr>
+					<tr>
+						<th>
+							Price on Steam
+						</th>
+						<td id="game-price">
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+		<div class="card half-wide">
+			<div class="card-header">
+				Youtube Video
+			</div>
+			<div class="card-content yt-card">
+				<div class="yt-vid" id="vid1">
+					<iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+				</div>
+			</div>
+		</div>
+		<div class="card half-wide">
+			<div class="card-header">
+				Youtube Video
+			</div>
+			<div class="card-content yt-card">
+				<div class="yt-vid" id="vid2">
+					<iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+				</div>
+			</div>
+		</div>
+		<div class="card half-wide">
+			<div class="card-header">
+				Youtube Video
+			</div>
+			<div class="card-content yt-card">
+				<div class="yt-vid" id="vid3">
+					<iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+				</div>
+			</div>
+		</div>
+		<div class="card half-wide">
+			<div class="card-header">
+				Youtube Video
+			</div>
+			<div class="card-content yt-card">
+				<div class="yt-vid" id="vid4">
+					<iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="card" id="search-results">
+	<div class="card-header">
+		Search Results
+	</div>
+	<div class="card-content" id="search-results-content">
+	</div>
+</div>
+
+<div class="flex-content">
+	<div class="card half-wide left">
+		<div class="card-header">
+			Popular Searches
+		</div>
+		<div class="card-content">
+			<div class="search-result">
+				<div class="search-result-image">
+					<img src="http://cdn.akamai.steamstatic.com/steam/apps/10/header.jpg" width="200" height="93">
+				</div>
+				<div class="search-result-text">
+					<span class="search-result-name">Counter-Strike</span><br>
+					<span class="search-result-appid">10</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card half-wide right">
+		<div class="card-header">
+			Recent Searches
+		</div>
+		<div class="card-content">
+			<div class="search-result">
+				<div class="search-result-image">
+					<img src="http://cdn.akamai.steamstatic.com/steam/apps/10/header.jpg" width="200" height="93">
+				</div>
+				<div class="search-result-text">
+					<span class="search-result-name">Counter-Strike</span><br>
+					<span class="search-result-appid">10</span>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<!-- JQuery code -->
+<script type="text/javascript">
+
+$("document").ready(function() {
+
+	var searchTerm = "";
+	var searchURL = "";
+	var gameURL = "";
+	var gameResponse = null;
+	var gameAppid = "";
+	var gameDevelopers = "";
+	var gamePublishers = "";
+	var gameGenres = "";
+	var gameCategories = "";
+
+	console.log(window.location.href);
+
+	function searchGame() {
+		$("#notification").css("display", "none");
+		searchTerm = $("#search-box").val();
+
+		$("#search-results-content").empty();
+
+		if(searchTerm != ""){
+			$("#game-info").css("display", "none");
+			console.log(searchTerm);
+			searchURL = window.location.href + "api/search/" + searchTerm;
+			console.log(searchURL);
+			$("#search-results").css("display", "block");
+			$.ajax({
+				dataType: "json",
+				type: "GET",
+				url: searchURL,
+				success: function(data){
+					console.log(data);
+					for(i = 0; i < data.length; i++){
+						console.log(data[i].appid);
+						console.log(data[i].name);
+
+						$("#search-results-content").append('<div class="search-result"><div class="search-result-image"><img src="http://cdn.akamai.steamstatic.com/steam/apps/' + data[i].appid + '/header.jpg" width="200" height="93"></div><div class="search-result-text"><span class="search-result-name">' + data[i].name + '</span><br><span class="search-result-appid">' + data[i].appid + '</span></div></div>');
+					}
+				}
+			});
+		}
+	}
+
+	$("#search-button").click(function(){
+		searchGame();
+	});
+
+	$("#search-box").keypress(function(event){
+		if(event.keyCode == 13){
+			searchGame();
+		}
+	});
+
+	function showGame() {
+
+		$("#game-info").css("display", "none");
+		$("#search-results").css("display", "none");
+		$("#notification").css("display", "none");
+
+		gameURL = window.location.href + "api/game/" + gameAppid;
+
+		$.ajax({
+			dataType: "json",
+			type: "GET",
+			url: gameURL,
+			success: function(data){
+				if(data.success){
+					console.log(data);
+					$("#game-header-img").children("img").attr("src", data.gameImage);
+					$("#game-header-text").html(data.gameName);
+					$("#game-description").html(data.gameDescription);
+					$("#game-appid").html(data.gameId);
+
+					gameDevelopers = "";
+					for(i = 0; i < data.gameDevelopers.length; i++){
+						if( i < data.gameDevelopers.length - 1){
+							gameDevelopers = gameDevelopers + data.gameDevelopers[i] + "<br>";
+						}
+						else{
+							gameDevelopers = gameDevelopers + data.gameDevelopers[i];
+						}
+					}
+
+					gamePublishers = "";
+					for(i = 0; i < data.gamePublishers.length; i++){
+						if( i < data.gamePublishers.length - 1){
+							gamePublishers = gamePublishers + data.gamePublishers[i] + "<br>";
+						}
+						else{
+							gamePublishers = gamePublishers + data.gamePublishers[i];
+						}
+					}
+
+					gameGenres = "";
+					for(i = 0; i < data.gameGenres.length; i++){
+						if( i < data.gameGenres.length - 1){
+							gameGenres = gameGenres + data.gameGenres[i] + "<br>";
+						}
+						else{
+							gameGenres = gameGenres + data.gameGenres[i];
+						}
+					}
+
+					gameCategories = "";
+					for(i = 0; i < data.gameCategories.length; i++){
+						if( i < data.gameCategories.length - 1){
+							gameCategories = gameCategories + data.gameCategories[i] + "<br>";
+						}
+						else{
+							gameCategories = gameCategories + data.gameCategories[i];
+						}
+					}
+
+					$("#game-developers").html(gameDevelopers);
+					$("#game-publishers").html(gamePublishers);
+					$("#game-genres").html(gameGenres);
+					$("#game-categories").html(gameCategories);
+					$("#game-price").html(data.gamePrice);
+
+					for(i = 0; i < data.videoIDs.length; i++){
+						$("#vid" + (i+1)).children("iframe").attr("src", "https://www.youtube.com/embed/" + data.videoIDs[i]);
+					}
+
+					$("#game-info").css("display", "block");
+				}
+				else{
+					$("#notification .card-content").html("This is not a game. Sorry.");
+					$("#notification").css("display", "block");
+				}
+			}
+		});
+	}
+
+	$(document).on("click", ".search-result", function(){
+		gameAppid = $(this).children(".search-result-text").children(".search-result-appid").text();
+		console.log(gameAppid);
+		showGame();
+	});
+
+});
+
+</script>
+
+{% endblock %}

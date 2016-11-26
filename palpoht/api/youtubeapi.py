@@ -1,8 +1,8 @@
 import requests
 
-def getVideos(name):
+def getVideos(name, amount):
 	API_KEY = 'AIzaSyBuVlLJ3GLgSKIon98nvkWZW4q8q-01H7E'
-	requestURL = 'https://www.googleapis.com/youtube/v3/search?part=id&maxResults=3&type=video&q=' + name + '&key=' + API_KEY
+	requestURL = 'https://www.googleapis.com/youtube/v3/search?part=id&maxResults=' + str(amount) + '&type=video&q=' + name + '&key=' + API_KEY
 	requestResult = requests.get(requestURL).json()
 	
 	videoIDs = []
@@ -10,11 +10,7 @@ def getVideos(name):
 	for video in requestResult['items']:
 		videoIDs.append(video['id']['videoId'])
 
-	print(videoIDs)
-
 	videoIDList = { 'videoIDs': videoIDs }
-
-	print(videoIDList)
 
 	return videoIDList
 	

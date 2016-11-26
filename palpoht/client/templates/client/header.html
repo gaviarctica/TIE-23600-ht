@@ -1,0 +1,25 @@
+<html>
+	<header>
+	<title>Game Info Finder</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static "style.css" %}" />
+	<script src="{% static "jquery-3.1.1.js" %}"></script>
+	</header>
+	<body>
+		<div id="header">
+			<span id="bannerlogo" class="header">Steam Game Info Finder</span>
+			<div id="search-container">
+				<span>Find a game:</span>
+				<input id="search-box" type="text"><button id="search-button" type="button">GO</button>
+			</div>
+		</div>
+		<div id="content">
+			{% block body %}
+			{% endblock %}
+		</div>
+		<div id="footer">
+			Powered by:
+			<div id="logos"></div>
+		</div>		
+	</body>
+</html>

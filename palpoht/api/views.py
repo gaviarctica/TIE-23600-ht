@@ -17,7 +17,7 @@ def gameinfo(request, appid):
 		jsonContent = json.dumps(steamData)
 		return HttpResponse(jsonContent, content_type='application/json')
 
-	youtubeData = youtubeapi.getVideos(steamData['gameName'])
+	youtubeData = youtubeapi.getVideos(steamData['gameName'], 4)
 
 	# Combine the dicts
 	combinedData = { **steamData, **youtubeData }

@@ -1,0 +1,236 @@
+* {
+	box-sizing: border-box;
+	font-family: Segoe UI, Arial;
+	color: #bab9b5;
+}
+
+body {
+	margin: 20px;
+	background-image: url("bg.svg");
+	background-color: #171a21;
+	background-attachment: fixed;
+	background-size: cover;
+	background-position: center top;
+	max-width: 1024px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.header {
+	color: #8bb008;
+}
+
+#header {
+	background-color: #171a21;
+	height: auto;
+	margin-bottom: 10px;
+	box-shadow: 0px 0px 10px #111;
+}
+
+#bannerlogo {
+	font-size: 1.5em;
+	line-height: 80px;
+	padding-left: 25px;
+}
+
+#footer {
+	background-color: #171a21;
+	height: 180px;
+	box-shadow: 0px 0px 10px #111;
+	text-align: center;
+	padding-top: 40px;
+	margin: auto;
+	margin-top: 5px;
+	font-size: 0.9em;
+}
+
+#logos {
+	background-image: url("poweredby.png");
+	width: 302px;
+	height: 48px;
+	margin: auto;
+	margin-top: 20px;
+}
+
+#content {
+	width: 100%;
+	height: auto;	
+}
+
+.flex-content {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#search-container {
+	width: 400px;
+	float: right;
+	padding-right: 25px;
+	padding-top: 5px;
+}
+
+#search-box {
+	width: 85%;
+	background-color: #d1dae1;
+	border: none;
+	height: 35px;
+	color: #171a21;
+	font-size: 1.2em;
+	padding-left: 5px;
+	margin-top: 3px;
+}
+
+#search-button {
+	width: 15%;
+	height: 35px;
+	background-color: #8bb008;
+	border: none;
+	color: #fff;
+	font-size: 1.2em;
+	margin-top: 3px;
+}
+
+#search-button:active {
+	background-color: #7b9c09;
+}
+
+.card {
+	margin: 0px 0 10px 0;
+	background-color: #1b2838;
+	box-shadow: 0px 0px 10px #111;
+}
+
+.flex-content .card {
+	margin-right: 10px;
+	max-width: calc(50% - 10px);
+}
+
+.flex-content .card:nth-child(2n) {
+	margin-right: 0;
+}
+
+.half-wide {
+	vertical-align: top;
+	min-width: calc(50% - 5px);
+}
+
+.left {
+}
+
+.right {
+}
+
+.card-header {
+	color: #8bb008;
+	font-size: 1.2em;
+	padding: 5px 10px 10px 10px;
+	background-color: #171a21;
+}
+
+#game-header {
+	padding: 0;
+	height: 215px;
+}
+
+#game-header-img, #game-header-text {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#game-header-text {
+	color: #8bb008;
+	font-size: 2em;
+	text-align: center;
+	padding-left: 20px;
+	max-width: calc(100% - 500px);
+}
+
+.card-content {
+	padding: 10px;
+}
+
+.search-result {
+	width: 100%;
+	height: 95px;
+	border: 1px #171a21 solid;
+}
+
+.search-result:hover {
+	background-color: #233448;
+}
+
+.search-result:last-child {
+	margin-bottom: 0;
+}
+
+.card-content a {
+	margin-bottom: 10px;
+	display: block;
+	text-decoration: none;
+}
+
+.card-content table td, .card-content table th {
+	border-bottom: 1px solid #171a21;
+	height: 50px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.card-content table tr:last-child td, .card-content table tr:last-child th {
+	border-bottom: none;
+}
+
+.card-content table th {
+	color: #8bb008;
+	text-align: left;
+	padding-right: 15px;
+	min-width: 10em;
+}
+
+.card-content table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.yt-card {
+	padding: 0;
+}
+
+.card-content .yt-vid {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+}
+
+.yt-vid iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.search-result-image {
+	width: 200px;
+	display: inline-block;
+}
+
+.search-result-text {
+	display: inline-block;
+	vertical-align: top;
+	padding-left: 5px;
+}
+
+.search-result-name {
+	font-size: 1.2em;
+}
+
+.search-result-appid {
+	font-size: 0.9em;
+	color: #8f8f8f;
+}
+
+#game-info, #search-results, #notification {
+	display: none;
+}

@@ -31,7 +31,7 @@ def getGameInfo(appid):
 			'success': True,
 			'gameId': appid,
 			'gameName': jsonGameInfo[appid]['data']['name'],
-			'gameDescription': jsonGameInfo[appid]['data']['short_description'],
+			'gameDescription': jsonGameInfo[appid]['data']['detailed_description'],
 			'gamePrice': jsonGameInfo[appid]['data']['price_overview']['final'],
 			'gameImage': jsonGameInfo[appid]['data']['header_image'],
 			'gameDevelopers': jsonGameInfo[appid]['data']['developers'],

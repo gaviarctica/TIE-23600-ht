@@ -15,10 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from api import views
+from api import views as apiViews
+from client import views as clientViews
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/search/(?P<name>.+)/$', views.gamesearch, name='gamesearch' ),
-    url(r'^api/game/(?P<appid>[0-9]+)/$', views.gameinfo, name='gameinfo' ),
+    #API
+    url(r'^api/search/(?P<name>.+)/$', apiViews.gamesearch, name='gamesearch' ),
+    url(r'^api/game/(?P<appid>[0-9]+)/$', apiViews.gameinfo, name='gameinfo' ),
+
+    #Client app
+    url(r'^$', clientViews.frontpage, name='frontpage')
 ]

@@ -1,4 +1,5 @@
 #https://www.reddit.com/search.json?q=counter-strike&sort=top&limit=5&t=week&type=link
+#https://www.reddit.com/search.json?sort=top&t=week&limit=5&syntax=cloudsearch&q=%28field+text+%27%22my%20summer%20car%22%27%29
 
 # after	
 # fullname of a thing
@@ -33,7 +34,7 @@ import time
 
 def getRedditDiscussions(name):
 
-	wholeURL = "https://www.reddit.com/search.json?sort=top&limit=5&t=week&type=link&q=" + name
+	wholeURL = 'https://www.reddit.com/search.json?sort=top&t=week&limit=5&syntax=cloudsearch&q=(field+text+\'"' + name + '"\')'
 	rDiscussionInfo = requests.get(wholeURL, headers = {'User-agent': 'School project by /u/gtpalpo'})
 	jsonDiscussionInfo = rDiscussionInfo.json()
 

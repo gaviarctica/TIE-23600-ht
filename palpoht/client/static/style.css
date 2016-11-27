@@ -51,7 +51,7 @@ body {
 
 #logos {
 	background-image: url("poweredby.png");
-	width: 302px;
+	width: 497px;
 	height: 48px;
 	margin: auto;
 	margin-top: 20px;
@@ -234,5 +234,41 @@ body {
 }
 
 #game-info, #search-results, #notification {
+	display: none;
+}
+
+.reddit-discussion-title {
+	color: #8bb008 !important;
+}
+
+.reddit-discussion-comments {
+	font-size: 0.8em;
+}
+
+.reddit-discussion-subreddit {
+	font-size: 0.8em;
+	color: #8f8f8f;
+}
+
+.reddit-discussion a {
+	margin: 0;
+}
+
+.reddit-discussion {
+	border: 1px #171a21 solid;
+	margin-bottom: 5px;
+	padding-left: 5px;
+	padding-bottom: 3px;
+}
+
+.reddit-discussion a div:hover {
+	text-decoration: underline;
+}
+
+#card-loading {
+	text-align: center;
+	height: 215px;
+	line-height: 215px;
+	font-size: 2em;
 	display: none;
 }

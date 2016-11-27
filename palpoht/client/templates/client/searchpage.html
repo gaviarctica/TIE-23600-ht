@@ -10,6 +10,12 @@
 	</div>
 </div>
 
+<div class="card">
+	<div class="card-header" id="card-loading">
+		Loading...
+	</div>
+</div>
+
 <div id="game-info">
 	<div class="card">
 		<div class="card-header" id="game-header">
@@ -79,7 +85,18 @@
 				</table>
 			</div>
 		</div>
-		
+	</div>
+
+	<div class="card">
+		<div class="card-header">
+		Reddit Discussions
+		</div>
+		<div class="card-content" id="reddit-content">
+			
+		</div>
+	</div>
+
+	<div class="flex-content">
 		<div class="card half-wide">
 			<div class="card-header">
 				Youtube Video
@@ -163,9 +180,15 @@ $("document").ready(function() {
 	var gameGenres = "";
 	var gameCategories = "";
 
-	console.log(window.location.href);
+	function clearVideos() {
+		$("#vid1").children("iframe").attr("src", "");
+		$("#vid2").children("iframe").attr("src", "");
+		$("#vid3").children("iframe").attr("src", "");
+		$("#vid4").children("iframe").attr("src", "");
+	}
 
 	function searchGame() {
+		clearVideos();
 		$("#notification").css("display", "none");
 		searchTerm = $("#search-box").val();
 
@@ -176,13 +199,14 @@ $("document").ready(function() {
 			console.log(searchTerm);
 			searchURL = window.location.href + "api/search/" + searchTerm;
 			console.log(searchURL);
-			$("#search-results").css("display", "block");
+			$("#card-loading").css("display", "block");
 			$.ajax({
 				dataType: "json",
 				type: "GET",
 				url: searchURL,
 				success: function(data){
-					console.log(data);
+					$("#card-loading").css("display", "none");
+					$("#search-results").css("display", "block");
 					for(i = 0; i < data.length; i++){
 						console.log(data[i].appid);
 						console.log(data[i].name);
@@ -212,20 +236,20 @@ $("document").ready(function() {
 	});
 
 	function showGame() {
-
+		clearVideos();
 		$("#game-info").css("display", "none");
 		$("#search-results").css("display", "none");
 		$("#notification").css("display", "none");
 
 		gameURL = window.location.href + "api/game/" + gameAppid;
 
+		$("#card-loading").css("display", "block");
 		$.ajax({
 			dataType: "json",
 			type: "GET",
 			url: gameURL,
 			success: function(data){
 				if(data.success){
-					console.log(data);
 					$("#game-header-img").children("img").attr("src", data.gameImage);
 					$("#game-header-text").html(data.gameName);
 					$("#game-description").html(data.gameDescription);
@@ -277,14 +301,26 @@ $("document").ready(function() {
 					$("#game-categories").html(gameCategories);
 					$("#game-price").html(data.gamePrice);
 
+					$("#reddit-content").html("");
+					for(i = 0; i < data.redditDiscussions.length; i++){
+						$("#reddit-content").append(
+							'<div class="reddit-discussion"><a href="' + data.redditDiscussions[i].url + '"><div class="reddit-discussion-title">' + data.redditDiscussions[i].title + '</div></a><a href="https://reddit.com' + data.redditDiscussions[i].permalink + '"><div class="reddit-discussion-comments">comments</div></a><a href="https://reddit.com/r/' + data.redditDiscussions[i].subreddit + '"><div class="reddit-discussion-subreddit">/r/' + data.redditDiscussions[i].subreddit + '</div></a></div>'
+							);
+					}
+					if(data.redditDiscussions.length == 0){
+						$("#reddit-content").append("No Reddit discussions were found. :(");
+					}
+
 					for(i = 0; i < data.videoIDs.length; i++){
 						$("#vid" + (i+1)).children("iframe").attr("src", "https://www.youtube.com/embed/" + data.videoIDs[i]);
 					}
 
+					$("#card-loading").css("display", "none");
 					$("#game-info").css("display", "block");
 				}
 				else{
 					$("#notification .card-content").html("This is not a game. Sorry.");
+					$("#card-loading").css("display", "none");
 					$("#notification").css("display", "block");
 				}
 			}

@@ -189,7 +189,12 @@ $("document").ready(function() {
 
 						if( !data[i].name.includes("DLC") ){
 							$("#search-results-content").append('<div class="search-result"><div class="search-result-image"><img src="http://cdn.akamai.steamstatic.com/steam/apps/' + data[i].appid + '/header.jpg" width="200" height="93"></div><div class="search-result-text"><span class="search-result-name">' + data[i].name + '</span><br><span class="search-result-appid">' + data[i].appid + '</span></div></div>');
+
 						}
+					}
+					if( data.length == 0 ){
+						$("#search-results .card-content").html("Did not find any matches for the query.");
+						$("#search-results").css("display", "block");
 					}
 				}
 			});

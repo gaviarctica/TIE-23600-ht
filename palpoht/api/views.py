@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from . import steamapi, youtubeapi
+from . import steamapi, youtubeapi, redditapi
 from .models import SearchHistory, NotGames
 import json
 import datetime
@@ -24,9 +24,11 @@ def gameinfo(request, appid):
 		return HttpResponse(jsonContent, content_type='application/json')
 
 	youtubeData = youtubeapi.getVideos(steamData['gameName'], 4)
+	redditData = redditapi.getRedditDiscussions(steamData['gameName'])
 
 	# Combine the dicts
 	steamData.update(youtubeData)
+	steamData.update(redditData)
 	combinedData = steamData
 
 	#Add to database search history

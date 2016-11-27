@@ -1,6 +1,7 @@
-import datetime
 import requests
 import json
+from collections import OrderedDict
+from .models import NotGames
 
 # HAETAAN NIMEN PERUSTEELLA
 # http://api.steampowered.com/ISteamApps/GetAppList/v0001/
@@ -27,18 +28,23 @@ def getGameInfo(appid):
 		for cat in jsonGameInfo[appid]['data']['categories']:
 			cats.append(cat['description'])
 
-		content = {
-			'success': True,
-			'gameId': appid,
-			'gameName': jsonGameInfo[appid]['data']['name'],
-			'gameDescription': jsonGameInfo[appid]['data']['detailed_description'],
-			'gamePrice': jsonGameInfo[appid]['data']['price_overview']['final'],
-			'gameImage': jsonGameInfo[appid]['data']['header_image'],
-			'gameDevelopers': jsonGameInfo[appid]['data']['developers'],
-			'gamePublishers': jsonGameInfo[appid]['data']['publishers'],
-			'gameGenres': genres,
-			'gameCategories': cats
-		}
+		if 'price_overview' in jsonGameInfo[appid]['data']:
+			price = jsonGameInfo[appid]['data']['price_overview']['final']
+		else:
+			price = 'Free'
+
+		content = OrderedDict([
+			('success', True),
+			('gameId', appid),
+			('gameName', jsonGameInfo[appid]['data']['name']),
+			('gameDescription', jsonGameInfo[appid]['data']['detailed_description']),
+			('gamePrice', price),
+			('gameImage', jsonGameInfo[appid]['data']['header_image']),
+			('gameDevelopers', jsonGameInfo[appid]['data']['developers']),
+			('gamePublishers', jsonGameInfo[appid]['data']['publishers']),
+			('gameGenres', genres),
+			('gameCategories', cats)
+		])
 
 		return content
 
@@ -54,7 +60,7 @@ def findGames(name):
 	found = []
 
 	for game in rSteamGames['applist']['apps']['app']:
-		if name.lower() in game['name'].lower():
+		if name.lower() in game['name'].lower() and not NotGames.objects.filter(appid = game['appid']).exists():
 			found.append({
 				'appid': game['appid'],
 				'name': game['name']

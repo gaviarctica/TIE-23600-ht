@@ -1,4 +1,5 @@
 import requests
+from collections import OrderedDict
 
 def getVideos(name, amount):
 	API_KEY = 'AIzaSyBuVlLJ3GLgSKIon98nvkWZW4q8q-01H7E'
@@ -10,7 +11,7 @@ def getVideos(name, amount):
 	for video in requestResult['items']:
 		videoIDs.append(video['id']['videoId'])
 
-	videoIDList = { 'videoIDs': videoIDs }
+	videoIDList = OrderedDict([ ('videoIDs', videoIDs) ])
 
 	return videoIDList
 	

@@ -1,11 +1,12 @@
 from django.contrib import admin
+from .models import SearchHistory, NotGames
 
 # Register your models here.
-# class LastDBUpdateAdmin(admin.ModelAdmin):
-# 	pass
+class SearchHistoryAdmin(admin.ModelAdmin):
+	pass
 
-# class GameIDAdmin(admin.ModelAdmin):
-# 	pass
+class NotGamesAdmin(admin.ModelAdmin):
+ 	pass
 
-# admin.site.register(LastDBUpdate, LastDBUpdateAdmin)
-# admin.site.register(GameID, GameIDAdmin)
+admin.site.register(SearchHistory, SearchHistoryAdmin)
+admin.site.register(NotGames, NotGamesAdmin)

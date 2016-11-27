@@ -136,33 +136,14 @@
 		<div class="card-header">
 			Popular Searches
 		</div>
-		<div class="card-content">
-			<div class="search-result">
-				<div class="search-result-image">
-					<img src="http://cdn.akamai.steamstatic.com/steam/apps/10/header.jpg" width="200" height="93">
-				</div>
-				<div class="search-result-text">
-					<span class="search-result-name">Counter-Strike</span><br>
-					<span class="search-result-appid">10</span>
-				</div>
-			</div>
+		<div class="card-content" id="popular-content">
 		</div>
 	</div>
 	<div class="card half-wide right">
 		<div class="card-header">
 			Recent Searches
 		</div>
-		<div class="card-content">
-			<div class="search-result">
-				<div class="search-result-image">
-					<img src="http://cdn.akamai.steamstatic.com/steam/apps/10/header.jpg" width="200" height="93">
-				</div>
-				<div class="search-result-text">
-					<span class="search-result-name">Counter-Strike</span><br>
-					<span class="search-result-appid">10</span>
-				</div>
-			</div>
-
+		<div class="card-content" id="recent-content">
 		</div>
 	</div>
 </div>
@@ -206,7 +187,9 @@ $("document").ready(function() {
 						console.log(data[i].appid);
 						console.log(data[i].name);
 
-						$("#search-results-content").append('<div class="search-result"><div class="search-result-image"><img src="http://cdn.akamai.steamstatic.com/steam/apps/' + data[i].appid + '/header.jpg" width="200" height="93"></div><div class="search-result-text"><span class="search-result-name">' + data[i].name + '</span><br><span class="search-result-appid">' + data[i].appid + '</span></div></div>');
+						if( !data[i].name.includes("DLC") ){
+							$("#search-results-content").append('<div class="search-result"><div class="search-result-image"><img src="http://cdn.akamai.steamstatic.com/steam/apps/' + data[i].appid + '/header.jpg" width="200" height="93"></div><div class="search-result-text"><span class="search-result-name">' + data[i].name + '</span><br><span class="search-result-appid">' + data[i].appid + '</span></div></div>');
+						}
 					}
 				}
 			});
@@ -308,6 +291,37 @@ $("document").ready(function() {
 		console.log(gameAppid);
 		showGame();
 	});
+
+	function populatePopular(){
+		var popularUrl = window.location.href + "api/history/popular?count=5";
+		$.ajax({
+			dataType: "json",
+			type: "GET",
+			url: popularUrl,
+			success: function(data){
+				for(i = 0; i < data.length; i++){
+					$("#popular-content").append('<div class="search-result"><div class="search-result-image"><img src="http://cdn.akamai.steamstatic.com/steam/apps/' + data[i].appid + '/header.jpg" width="200" height="93"></div><div class="search-result-text"><span class="search-result-name">' + data[i].name + '</span><br><span class="search-result-appid">' + data[i].appid + '</span><span class="search-result-count"> - searched ' + data[i].searchCount + ' times</span></div></div>');
+					}
+			}
+		});
+	}
+
+	function populateRecent(){
+		var recentUrl = window.location.href + "api/history/recent?count=5";
+		$.ajax({
+			dataType: "json",
+			type: "GET",
+			url: recentUrl,
+			success: function(data){
+				for(i = 0; i < data.length; i++){
+					$("#recent-content").append('<div class="search-result"><div class="search-result-image"><img src="http://cdn.akamai.steamstatic.com/steam/apps/' + data[i].appid + '/header.jpg" width="200" height="93"></div><div class="search-result-text"><span class="search-result-name">' + data[i].name + '</span><br><span class="search-result-appid">' + data[i].appid + '</span></div></div>');
+					}
+			}
+		});
+	}
+
+	populatePopular();
+	populateRecent();
 
 });
 

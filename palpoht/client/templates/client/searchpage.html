@@ -299,7 +299,13 @@ $("document").ready(function() {
 					$("#game-publishers").html(gamePublishers);
 					$("#game-genres").html(gameGenres);
 					$("#game-categories").html(gameCategories);
-					$("#game-price").html(data.gamePrice);
+
+					if(typeof(data.gamePrice) == "number"){
+						$("#game-price").html(data.gamePrice / 100 + "€");	
+					}
+					else{
+						$("#game-price").html(data.gamePrice);
+					}
 
 					$("#reddit-content").html("");
 					for(i = 0; i < data.redditDiscussions.length; i++){
@@ -329,7 +335,6 @@ $("document").ready(function() {
 
 	$(document).on("click", ".search-result", function(){
 		gameAppid = $(this).children(".search-result-text").children(".search-result-appid").text();
-		console.log(gameAppid);
 		showGame();
 	});
 

@@ -16,39 +16,41 @@ def getGameInfo(appid):
 	wholeURL = "http://store.steampowered.com/api/appdetails?appids=" + str(appid)
 	rGameInfo = requests.get(wholeURL)
 	jsonGameInfo = rGameInfo.json()
-
-	if jsonGameInfo is not None and jsonGameInfo[appid]['success'] == True and jsonGameInfo[appid]['data']['type'] == 'game':
+	if jsonGameInfo is not None and jsonGameInfo[str(appid)]['success'] == True and jsonGameInfo[str(appid)]['data']['type'] == 'game':
 	
 		genres = []
 		cats = []
 
-		for genre in jsonGameInfo[appid]['data']['genres']:
+		for genre in jsonGameInfo[str(appid)]['data']['genres']:
 			genres.append(genre['description'])
 
-		for cat in jsonGameInfo[appid]['data']['categories']:
+		for cat in jsonGameInfo[str(appid)]['data']['categories']:
 			cats.append(cat['description'])
 
-		if 'price_overview' in jsonGameInfo[appid]['data']:
-			price = jsonGameInfo[appid]['data']['price_overview']['final']
+		if 'price_overview' in jsonGameInfo[str(appid)]['data']:
+			price = jsonGameInfo[str(appid)]['data']['price_overview']['final']
 		else:
 			price = 'Free'
 
 		content = OrderedDict([
 			('success', True),
-			('gameId', appid),
-			('gameName', jsonGameInfo[appid]['data']['name']),
-			('gameDescription', jsonGameInfo[appid]['data']['detailed_description']),
+			('gameId', str(appid)),
+			('gameName', jsonGameInfo[str(appid)]['data']['name']),
+			('gameDescription', jsonGameInfo[str(appid)]['data']['detailed_description']),
 			('gamePrice', price),
-			('gameImage', jsonGameInfo[appid]['data']['header_image']),
-			('gameDevelopers', jsonGameInfo[appid]['data']['developers']),
-			('gamePublishers', jsonGameInfo[appid]['data']['publishers']),
+			('gameImage', jsonGameInfo[str(appid)]['data']['header_image']),
+			('gameDevelopers', jsonGameInfo[str(appid)]['data']['developers']),
+			('gamePublishers', jsonGameInfo[str(appid)]['data']['publishers']),
 			('gameGenres', genres),
 			('gameCategories', cats)
 		])
 
 		return content
 
-	return {'success': False}
+	return {
+		'success': False,
+		'message': "Game was not found with this appid!"
+	}
 
 
 

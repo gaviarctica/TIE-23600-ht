@@ -197,7 +197,7 @@ $("document").ready(function() {
 		if(searchTerm != ""){
 			$("#game-info").css("display", "none");
 			console.log(searchTerm);
-			searchURL = window.location.href + "api/search/" + searchTerm;
+			searchURL = window.location.href + "api/search?q=" + searchTerm;
 			console.log(searchURL);
 			$("#card-loading").css("display", "block");
 			$.ajax({
@@ -241,7 +241,7 @@ $("document").ready(function() {
 		$("#search-results").css("display", "none");
 		$("#notification").css("display", "none");
 
-		gameURL = window.location.href + "api/game/" + gameAppid;
+		gameURL = window.location.href + "api/game?appid=" + gameAppid + "&videos=4&discussions=5";
 
 		$("#card-loading").css("display", "block");
 		$.ajax({
@@ -329,6 +329,8 @@ $("document").ready(function() {
 					$("#card-loading").css("display", "none");
 					$("#notification").css("display", "block");
 				}
+				populatePopular();
+				populateRecent();
 			}
 		});
 	}
@@ -339,7 +341,8 @@ $("document").ready(function() {
 	});
 
 	function populatePopular(){
-		var popularUrl = window.location.href + "api/history/popular?count=5";
+		var popularUrl = window.location.href + "api/history/popular?count=8";
+		$("#popular-content").html("");
 		$.ajax({
 			dataType: "json",
 			type: "GET",
@@ -353,7 +356,8 @@ $("document").ready(function() {
 	}
 
 	function populateRecent(){
-		var recentUrl = window.location.href + "api/history/recent?count=5";
+		var recentUrl = window.location.href + "api/history/recent?count=8";
+		$("#recent-content").html("");
 		$.ajax({
 			dataType: "json",
 			type: "GET",

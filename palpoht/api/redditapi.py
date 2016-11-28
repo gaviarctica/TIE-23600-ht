@@ -32,9 +32,9 @@ from collections import OrderedDict
 import requests
 import time
 
-def getRedditDiscussions(name):
+def getRedditDiscussions(name, discussions):
 
-	wholeURL = 'https://www.reddit.com/search.json?sort=top&t=week&limit=5&syntax=cloudsearch&q=(field+text+\'"' + name + '"\')'
+	wholeURL = 'https://www.reddit.com/search.json?sort=top&t=week&limit=' + str(discussions) + '&syntax=cloudsearch&q=(field+text+\'"' + name + '"\')'
 	rDiscussionInfo = requests.get(wholeURL, headers = {'User-agent': 'School project by /u/gtpalpo'})
 	jsonDiscussionInfo = rDiscussionInfo.json()
 

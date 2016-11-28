@@ -6,14 +6,87 @@ import json
 import datetime
 from collections import OrderedDict
 
-def gamesearch(request, name):
+# Default count for popular and recent results
+DEFAULT_COUNT = 5
 
-	appid_list = steamapi.findGames(name)
+def checkRequest(request):
+
+	if request.method != 'GET':
+		falseRequest = {
+			'status_code': 400,
+			'message': "Please use GET request!"
+		}
+		return HttpResponse(json.dumps(falseRequest), content_type='application/json')
+
+def gamesearch(request):
+
+	checkRequest(request)
+
+	if request.GET.get('q') is None or request.GET.get('q') == '':
+		print("asd")
+
+		falseQuery = {
+			'success': False,
+			'message': "No query string was given! Use argument 'q' to assign a query string."
+		}
+
+		return HttpResponse(json.dumps(falseQuery), content_type='application/json')
+
+	appid_list = steamapi.findGames(request.GET.get('q'))
 
 	return HttpResponse(appid_list, content_type='application/json')
 
 
-def gameinfo(request, appid):
+def gameinfo(request):
+
+	checkRequest(request)
+
+	if request.method != 'GET':
+		falseRequest = {
+			'status_code': 400,
+			'message': "Please use GET request!"
+		}
+		return HttpResponse(json.dumps(falseRequest), content_type='application/json')
+
+	if request.GET.get('appid') is None:
+		falseQuery = {
+			'success': False,
+			'message': "No appid was given! Use argument 'appid' to assign an appid query."
+		}
+
+		return HttpResponse(json.dumps(falseQuery), content_type='application/json')
+
+	try:
+		appid = int(request.GET.get('appid'))
+
+	except ValueError:
+		falseQuery = {
+			'success': False,
+			'message': "No valid appid was given! Appid has to be a number!"
+		}
+
+		return HttpResponse(json.dumps(falseQuery), content_type='application/json')
+
+	if request.GET.get('videos') is not None:
+
+		try:
+			videos = int(request.GET.get('videos'))
+
+		except ValueError:
+			videos = 0
+	else:
+		videos = 0
+
+	if request.GET.get('discussions') is not None:
+
+		try:
+			discussions = int(request.GET.get('discussions'))
+
+		except ValueError:
+			discussions = 0
+
+	else:
+		discussions = 0
 
 	steamData = steamapi.getGameInfo(appid)
 
@@ -23,12 +96,12 @@ def gameinfo(request, appid):
 		jsonContent = json.dumps(steamData)
 		return HttpResponse(jsonContent, content_type='application/json')
 
-	youtubeData = youtubeapi.getVideos(steamData['gameName'], 4)
-	redditData = redditapi.getRedditDiscussions(steamData['gameName'])
-
 	# Combine the dicts
-	steamData.update(youtubeData)
-	steamData.update(redditData)
+	if videos > 0:
+		steamData.update(youtubeapi.getVideos(steamData['gameName'], videos))
+	if discussions > 0:
+		steamData.update(redditapi.getRedditDiscussions(steamData['gameName'], discussions))
+
 	combinedData = steamData
 
 	#Add to database search history
@@ -46,8 +119,22 @@ def gameinfo(request, appid):
 
 
 def popular(request):
-	count = request.GET.get('count')
-	popular = SearchHistory.objects.order_by('-searchCount')[:int(count)]
+
+	checkRequest(request)
+
+	if request.GET.get('count') == None:
+		count = DEFAULT_COUNT
+	else:
+		count = request.GET.get('count')
+
+	try:
+		popular = SearchHistory.objects.order_by('-searchCount')[:int(count)]
+
+	except ValueError:
+		popular = SearchHistory.objects.order_by('-searchCount')[:int(DEFAULT_COUNT)]
+
+	except AssertionError:
+		popular = SearchHistory.objects.order_by('-searchCount')[:int(DEFAULT_COUNT)]
 
 	results = []
 
@@ -64,8 +151,22 @@ def popular(request):
 
 
 def recent(request):
-	count = request.GET.get('count')
-	recent = SearchHistory.objects.all()[:int(count)]
+
+	checkRequest(request)
+
+	if request.GET.get('count') == None:
+		count = DEFAULT_COUNT
+	else:
+		count = request.GET.get('count')
+
+	try:
+		recent = SearchHistory.objects.all()[:int(count)]
+
+	except ValueError:
+		recent = SearchHistory.objects.all()[:int(DEFAULT_COUNT)]
+
+	except AssertionError:
+		recent = SearchHistory.objects.all()[:int(DEFAULT_COUNT)]
 
 	results = []
 

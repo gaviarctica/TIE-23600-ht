@@ -21,8 +21,9 @@ from client import views as clientViews
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     #API
-    url(r'^api/search/(?P<name>.+)/$', apiViews.gamesearch, name='gamesearch' ),
-    url(r'^api/game/(?P<appid>[0-9]+)/$', apiViews.gameinfo, name='gameinfo' ),
+    url(r'^api/search$', apiViews.gamesearch, name='gamesearch' ),
+    #url(r'^api/search/(?P<name>.+)/$', apiViews.gamesearch, name='gamesearch' ),
+    url(r'^api/game$', apiViews.gameinfo, name='gameinfo' ),
     url(r'^api/history/popular$', apiViews.popular, name='popular' ),
     url(r'^api/history/recent$', apiViews.recent, name='recent' ),
 

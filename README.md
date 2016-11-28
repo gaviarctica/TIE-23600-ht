@@ -1,18 +1,22 @@
 # TIE-23600-ht
 
-<h1> Suunnitelma </h1>:
+## Suunnitelma:
 Luodaan palvelu, joka etsii tietoa videopeleistä Steam-palvelun rajapinnasta sekä tarjoaa peleistä lisätietoa ainakin hakemalla niihin liittyviä videoita Youtube-palvelusta. Mahdollisesti haetaan lisätietoa myös esimerkiksi Reddit-keskustelujen muodossa. 
 
-<h1> Ryhmän jäsenet </h1>:
+### Ryhmän jäsenet:
 * Teemu Kuikka
 * Toni-Erik Martin
 
+<br>
+<br>
+<br>
+<br>
 
 <h1> Järjestelmän REST-rajapinta </h1>
 
 <h2> /api/search?q={string} </h2>
 * HTTP: GET
-* Argumentit:
+* Argumentit: <br>
 **q**: Haetun Steam-pelin ID
 * Palauttaa listan tuloksista, joita löytyy q:n perusteella JSON-muodossa.
 * Esimerkki: /api/search?q=my%20summer%20car
@@ -36,9 +40,9 @@ Luodaan palvelu, joka etsii tietoa videopeleistä Steam-palvelun rajapinnasta se
 <h2> /api/game?appid={int}&videos={int}&discussions={int}</h2>
 
 * HTTP: GET
-* Argumentit:
-	**appid**: Haetun Steam-pelin ID
-	**videos** (*valinnainen*): Haettavien peliin liittyvien Youtube-videoiden lukumäärä, oletusarvo = 0
+* Argumentit: <br>
+	**appid**: Haetun Steam-pelin ID <br>
+	**videos** (*valinnainen*): Haettavien peliin liittyvien Youtube-videoiden lukumäärä, oletusarvo = 0 <br>
 	**discussions** (*valinnainen*): Haettavien peliin liittyvien Reddit-keskustelujen lukumäärä, oletusarvo = 0
 * Palauttaa appid:ta vastaavan pelin tiedot JSON-muotoisena. Lisäksi palauttaa peliin liittyviä videoita ja keskusteluja riippuen valinnaisista argumenteista.
 * Esimerkki: /api/game?appid=10&discussions=1&videos=2
@@ -88,7 +92,7 @@ Luodaan palvelu, joka etsii tietoa videopeleistä Steam-palvelun rajapinnasta se
 
 <h2> /api/history/popular?count={int} </h2>
 * HTTP: GET
-* Argumentit:
+* Argumentit: <br>
 	**count** (*valinnainen*): Palautettavien suosittujen pelihakujen lukumäärä. Oletusarvo = 5
 * Palauttaa listan tämän palvelun suosituimmista pelihauista JSON-muodossa.
 * Esimerkki: /api/history/popular?count=2
@@ -110,7 +114,7 @@ Luodaan palvelu, joka etsii tietoa videopeleistä Steam-palvelun rajapinnasta se
 
 <h2> /api/history/recent?count={int} </h2>
 * HTTP: GET
-* Argumentit:
+* Argumentit: <br>
 	**count** (*valinnainen*): Palautettavien suosittujen pelihakujen lukumäärä. Oletusarvo = 5
 * Palauttaa listan tässä palvelussa viimeisimmäksi tehdyistä pelihauista JSON-muodossa.
 * Esimerkki: /api/history/recent?count=2

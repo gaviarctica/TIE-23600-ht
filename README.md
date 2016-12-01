@@ -8,8 +8,9 @@ Luodaan palvelu, joka etsii tietoa videopeleistä Steam-palvelun rajapinnasta se
 * Toni-Erik Martin
 
 <br>
-<br>
-<br>
+
+**Järjestelmä löytyy Herokusta osoitteella:** https://sgif.herokuapp.com/
+
 <br>
 
 <h1> Järjestelmän REST-rajapinta </h1>

@@ -5,7 +5,7 @@ Luodaan palvelu, joka etsii tietoa videopeleistä Steam-palvelun rajapinnasta se
 
 ### Ryhmän jäsenet:
 * Teemu Kuikka
-* Toni-Erik Martin
+* Toni-Erik Martin, toni-erik.martin@student.tut.fi
 
 <br>
 
